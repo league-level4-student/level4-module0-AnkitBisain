@@ -41,11 +41,22 @@
 
 package extras.the_wrong_way_cow;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class TheWrongWayCow {
 
     public static int[] findWrongWayCow(final char[][] field) {
-        // Fill in the code to return the x,y coordinate position of the
-        // head (letter 'c') of the wrong way cow!
+        HashMap<int[], String> cowDirections = new HashMap<>();
+        HashMap<String, Integer> directions = new HashMap<>();
+        ArrayList<int[]> heads = new ArrayList();
+        for(int i = 0; i<field.length; i++) {
+        		for(int j = 0; j< field[i].length; j++) {
+        			if(field[i][j] == 'c') {
+        				heads.add(new int[] {i,j});
+        			}
+        		}
+        }
         
         return null;
     }

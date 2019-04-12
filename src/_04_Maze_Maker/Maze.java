@@ -27,7 +27,7 @@ public class Maze {
 	public void draw(Graphics g) {
 		for(int i = 0; i < width; i++) {
 			for(int j=0; j < height; j++) {
-				g.drawRect(i, j, 1, 1);
+				cells[i][j].draw(g);
 			}
 		}     
 
