@@ -49,7 +49,12 @@ public class TheWrongWayCow {
     public static int[] findWrongWayCow(final char[][] field) {
         HashMap<int[], String> cowDirections = new HashMap<>();
         HashMap<String, Integer> directions = new HashMap<>();
+        directions.put("up", 0);
+        directions.put("down", 0);
+        directions.put("left", 0);
+        directions.put("right", 0);
         ArrayList<int[]> heads = new ArrayList();
+        
         for(int i = 0; i<field.length; i++) {
         		for(int j = 0; j< field[i].length; j++) {
         			if(field[i][j] == 'c') {
@@ -58,6 +63,56 @@ public class TheWrongWayCow {
         		}
         }
         
-        return null;
+        for( int[] head : heads) {
+        	cowDirections.put(head, direction(head, field));
+        	int current = directions.get(direction(head, field));
+        	directions.remove(direction(head, field), current);
+        	directions.put(direction(head, field), current+1);
+        }
+        
+        String wrongWay = "";
+        
+        for( String s : directions.keySet()) {
+        	if(directions.get(s) == 1) {
+        		wrongWay = s;
+        	}
+        }
+        
+        int[] theWrongWayCow = {100,100};
+        
+        for(int[] head : heads) {
+        	if(cowDirections.get(head) == wrongWay) {
+        		theWrongWayCow = head;	
+        	}
+        }
+        
+        int[] theRealWrongWayCow = {theWrongWayCow[1], theWrongWayCow[0]};
+        
+        return theRealWrongWayCow;
+    }
+    
+    public static String direction(int[] head, char[][] field) {
+    	if(getVal(new int[] {head[0]+1, head[1]} , field) == 'o' && getVal(new int[] {head[0]+2, head[1]} , field) == 'w') {
+    		return "right";
+    	}
+    	if(getVal(new int[] {head[0]-1, head[1]} , field) == 'o' && getVal(new int[] {head[0]-2, head[1]} , field) == 'w') {
+    		return "left";
+    	}
+    	if(getVal(new int[] {head[0], head[1]+1} , field) == 'o' && getVal(new int[] {head[0], head[1]+2} , field) == 'w') {
+    		return "up";
+    	}
+    	if(getVal(new int[] {head[0], head[1]-1} , field) == 'o' && getVal(new int[] {head[0], head[1]-2} , field) == 'w') {
+    		return "down";
+    	}
+    	return null;
+    }
+    
+    public static char getVal(int[] spot, char[][] field) {
+    	if(0 <= spot[0] && spot[0] < field.length) {
+    		if(0 <= spot[1] && spot[1] <field[spot[0]].length) {
+    			return field[spot[0]][spot[1]];
+    		}
+    	}
+    	return 'z';
     }
 }
